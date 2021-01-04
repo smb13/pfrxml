@@ -3,9 +3,6 @@ package ru.raiffeisen.pfrxml.repository.inmemory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import ru.raiffeisen.pfrxml.model.Meal;
-import ru.raiffeisen.pfrxml.repository.MealRepository;
-import ru.raiffeisen.pfrxml.util.MealsUtil;
 import ru.raiffeisen.pfrxml.util.Util;
 
 import javax.annotation.PostConstruct;
@@ -24,7 +21,7 @@ import static ru.raiffeisen.pfrxml.UserTestData.ADMIN_ID;
 import static ru.raiffeisen.pfrxml.UserTestData.USER_ID;
 
 @Repository
-public class InMemoryMealRepository implements MealRepository {
+public class InMemoryMealRepository { /*implements MealRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryMealRepository.class);
 
     // Map  userId -> mealRepository
@@ -82,5 +79,5 @@ public class InMemoryMealRepository implements MealRepository {
                         .filter(filter)
                         .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                         .collect(Collectors.toList());
-    }
+    }*/
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 public class JdbcUserRepository implements UserRepository {
-
+/*
     private static final BeanPropertyRowMapper<User> ROW_MAPPER = BeanPropertyRowMapper.newInstance(User.class);
 
     private final JdbcTemplate jdbcTemplate;
@@ -77,5 +77,5 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         return jdbcTemplate.query("SELECT * FROM users ORDER BY name, email", ROW_MAPPER);
-    }
+    }*/
 }

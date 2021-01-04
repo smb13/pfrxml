@@ -17,7 +17,7 @@ import static ru.raiffeisen.pfrxml.UserTestData.USER_ID;
 @RunWith(SpringRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 
-    @Autowired
+   /* @Autowired
     private AdminRestController controller;
 
     @Autowired
@@ -37,5 +37,5 @@ public class InMemoryAdminRestControllerSpringTest {
     @Test
     public void deleteNotFound() throws Exception {
         Assert.assertThrows(NotFoundException.class, () -> controller.delete(NOT_FOUND));
-    }
+    }*/
 }

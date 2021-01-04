@@ -9,14 +9,16 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/*
 import static ru.raiffeisen.pfrxml.UserTestData.admin;
 import static ru.raiffeisen.pfrxml.UserTestData.user;
+*/
 
 
 @Repository
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
 
-    public void init() {
+   /* public void init() {
         map.clear();
         map.put(UserTestData.USER_ID, user);
         map.put(UserTestData.ADMIN_ID, admin);
@@ -35,5 +37,5 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
                 .filter(u -> email.equals(u.getEmail()))
                 .findFirst()
                 .orElse(null);
-    }
+    }*/
 }

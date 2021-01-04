@@ -65,9 +65,26 @@ public class File extends AbstractBaseEntity implements HasId {
     @JsonBackReference
     private Pack pack;
 
-    public File(Integer id) {
-        super(id);
+    public File() {
     }
+
+    public File(Integer id, @NotBlank @Size(min = 3, max = 3) String type, @NotBlank @Size(min = 3, max = 3) String formatVersion, @NotBlank @Size(min = 4, max = 4) String year, @NotBlank @Size(min = 12, max = 12) String regNumToPfr, @NotBlank @Size(min = 3, max = 3) String districtCode, @NotBlank @Size(min = 8, max = 8) String packageNumber, @NotBlank @Size(min = 4, max = 4) String documentCode, @NotBlank @Size(min = 4, max = 4) String branchNumber, @Size(min = 10, max = 10) String outNumb, @NotBlank String body, Pack pack) {
+        super(id);
+        this.type = type;
+        this.formatVersion = formatVersion;
+        this.year = year;
+        this.regNumToPfr = regNumToPfr;
+        this.districtCode = districtCode;
+        this.packageNumber = packageNumber;
+        this.documentCode = documentCode;
+        this.branchNumber = branchNumber;
+        this.outNumb = outNumb;
+        this.body = body;
+        this.pack = pack;
+    }
+
+    
+
 
     public String getType() {
         return type;

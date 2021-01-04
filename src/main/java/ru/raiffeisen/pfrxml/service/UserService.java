@@ -12,7 +12,7 @@ import static ru.raiffeisen.pfrxml.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class UserService {
 
-    private final UserRepository repository;
+   /* private final UserRepository repository;
 
     public UserService(UserRepository repository) {
         this.repository = repository;
@@ -40,5 +40,5 @@ public class UserService {
 
     public void update(User user) {
         checkNotFoundWithId(repository.save(user), user.getId());
-    }
+    }*/
 }
