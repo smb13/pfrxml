@@ -1,15 +1,18 @@
 package ru.raiffeisen.pfrxml.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/")
 public class RootController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String rootPage() {
-        return "uploadFile";
+    @GetMapping("/")
+    public ModelAndView startPage() {
+        ModelAndView modelAndView = new ModelAndView("pfrxml");
+        return modelAndView;
     }
 }
 

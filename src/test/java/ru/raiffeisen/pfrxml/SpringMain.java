@@ -1,18 +1,8 @@
 package ru.raiffeisen.pfrxml;
 
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.raiffeisen.pfrxml.model.Role;
-import ru.raiffeisen.pfrxml.model.User;
-import ru.raiffeisen.pfrxml.to.MealTo;
 //import ru.raiffeisen.pfrxml.web.meal.MealRestController;
-import ru.raiffeisen.pfrxml.web.user.AdminRestController;
+//import ru.raiffeisen.pfrxml.web.user.AdminRestController;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.util.Arrays;
-import java.util.List;
 
 public class SpringMain {
     public static void main(String[] args) {

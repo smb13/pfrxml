@@ -2,8 +2,7 @@ package ru.raiffeisen.pfrxml.web;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class UploadedFile {
-
+public class FileModel {
     private MultipartFile file;
 
     public MultipartFile getFile() {
