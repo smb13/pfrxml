@@ -1,64 +1,66 @@
 package ru.raiffeisen.pfrxml.web.pack;
 
-        import ru.raiffeisen.pfrxml.model.Pack;
-        import ru.raiffeisen.pfrxml.service.PackService;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.http.HttpStatus;
-        import org.springframework.http.MediaType;
-        import org.springframework.http.ResponseEntity;
-        import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.raiffeisen.pfrxml.View;
+import ru.raiffeisen.pfrxml.model.Pack;
 
-        import java.util.List;
-        import java.util.Optional;
+import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/mycrud", produces = MediaType.APPLICATION_JSON_VALUE)
-public class PackRestController {
+@RequestMapping(value = PackRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class PackRestController extends AbstractPackController {
+        static final String REST_URL = "/rest/profile/packs";
 
-    private final PackService packService;
+        @Override
+        @GetMapping("/{id}")
+        public Pack get(@PathVariable int id) {
+                return super.get(id);
+        }
 
-    @Autowired
-    public PackRestController(PackService packService) {
-        this.packService = packService;
-    }
+        @Override
+        @DeleteMapping("/{id}")
+        @ResponseStatus(HttpStatus.NO_CONTENT)
+        public void delete(@PathVariable int id) {
+                super.delete(id);
+        }
 
-    @GetMapping(value = "/packs")
-    public ResponseEntity<List<Pack>> getAll() {
-        final List<Pack> packs = packService.readAll();
-        return packs != null &&  !packs.isEmpty()
-                ? new ResponseEntity<>(packs, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+        @Override
+        @GetMapping
+        public List<Pack> getAll() {
+                return super.getAll();
+        }
 
-    @GetMapping(value = "/packs/{id}")
-    public ResponseEntity<Pack> read(@PathVariable(name = "id") int id) {
-        final Optional<Pack> pack = packService.read(id);
-        return pack.isPresent()
-                ? new ResponseEntity<>(pack.get(), HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+        @Override
+        @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+        @ResponseStatus(HttpStatus.NO_CONTENT)
+        public void update(@Validated(View.Web.class) @RequestBody Pack pack, @PathVariable int id) {
+                super.update(pack, id);
+        }
 
-    @PostMapping(value = "/packs", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> create(@RequestBody Pack pack) {
-        packService.save(pack);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+        @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+        public ResponseEntity<Pack> createWithLocation(@Validated(View.Web.class) @RequestBody Pack pack) {
+                Pack created = super.create(pack);
 
-    @PutMapping(value = "/packs/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@PathVariable(name = "id") int id, @RequestBody Pack pack) {
-        final boolean updated = packService.update(pack, id);
-        return updated
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-    }
+                URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path(REST_URL + "/{id}")
+                        .buildAndExpand(created.getId()).toUri();
 
-    @DeleteMapping(value = "/packs/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
-        final boolean deleted = packService.delete(id);
-        return deleted
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-    }
+                return ResponseEntity.created(uriOfNewResource).body(created);
+        }
 
+        @Override
+        @GetMapping("/filter")
+        public List<Pack> getBetween(
+                @RequestParam @Nullable LocalDate startDate,
+                @RequestParam @Nullable LocalDate endDate) {
+                return super.getBetween(startDate, endDate);
+        }
 }
-

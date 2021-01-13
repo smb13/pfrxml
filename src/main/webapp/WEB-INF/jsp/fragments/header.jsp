@@ -3,9 +3,11 @@
 <html lang="ru">
 <head>
     <title>Обмен с ПФР</title>
-    <link rel="stylesheet" href="../../../css/style.css">
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}../css/style.css">--%>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<h2>Проект <a href="https://github.com/smb13/pfrxml" target="_blank">Обмен с ПФР</a></h2>
+<%--<h2>Проект <a href="https://github.com/smb13/pfrxml" target="_blank">Обмен с ПФР</a></h2>--%>
+<h2>Проект <a href="/pfrxml" target="_blank">Обмен с ПФР</a></h2>
 
 <hr>
 </html>

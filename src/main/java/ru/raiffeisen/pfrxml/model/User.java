@@ -23,7 +23,7 @@ import java.util.*;
         @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.name, u.email"),
 })*/
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "login", name = "users_unique_login_idx")})
 public class User extends AbstractBaseEntity implements HasId {
 
 /*    public static final String DELETE = "User.delete";
@@ -71,7 +71,7 @@ public class User extends AbstractBaseEntity implements HasId {
     private LocalDateTime registered = LocalDateTime.now();
 //    private Date registered = new Date();
 
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_unique_idx")})
@@ -79,7 +79,7 @@ public class User extends AbstractBaseEntity implements HasId {
     @ElementCollection(fetch = FetchType.EAGER)
 //    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 200)
-    @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
+    @JoinColumn(name = "id") //https://stackoverflow.com/a/62848296/548473
     @OnDelete(action= OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
@@ -98,6 +98,23 @@ public class User extends AbstractBaseEntity implements HasId {
 
     public User(Integer id, String login, String firstName, String lastName, String middleName, String phoneNumber, String password, Role role, Role... roles) {
         this(id, login, firstName, lastName, middleName, phoneNumber, password, true,  LocalDateTime.now(), EnumSet.of(role, roles));
+    }
+
+    public User(Integer id, String login, String firstName, String lastName, String middleName, String phoneNumber, String password, Collection<Role> roles) {
+        this(id, login, firstName, lastName, middleName, phoneNumber, password, true,  LocalDateTime.now(), roles);
+    }
+
+    public User(String login, String firstName, String lastName, String middleName, String phoneNumber, String password, boolean enabled, LocalDateTime registered, Collection<Role> roles) {
+        super();
+        this.login = login;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.enabled = enabled;
+        this.registered = registered;
+        setRoles(roles);
     }
 
     public User(Integer id, String login, String firstName, String lastName, String middleName, String phoneNumber, String password, boolean enabled, LocalDateTime registered, Collection<Role> roles) {
@@ -126,6 +143,7 @@ public class User extends AbstractBaseEntity implements HasId {
         setRoles(roles);
         setPacks(packs);
     }
+
 
     public String getLogin() {
         return login;

@@ -7,10 +7,18 @@ import ru.raiffeisen.pfrxml.HasId;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+@NamedQueries({
+        @NamedQuery(name = DataFile.ALL_SORTED, query = "SELECT d FROM DataFile d ORDER BY d.documentCode DESC"),
+        @NamedQuery(name = DataFile.DELETE, query = "DELETE FROM DataFile d WHERE d.id=:id"),
+        @NamedQuery(name = DataFile.ALL_BY_PACK, query = "SELECT d FROM DataFile d WHERE d.pack.id=:packId ORDER BY d.documentCode DESC")})
 
 @Entity
-@Table(name = "files")
-public class File extends AbstractBaseEntity implements HasId {
+@Table(name = "dataFiles")
+public class DataFile extends AbstractBaseEntity implements HasId {
+    public static final String ALL_SORTED = "DataFile.getAll";
+    public static final String DELETE = "DataFile.delete";
+    public static final String ALL_BY_PACK = "DataFile.getAllByPack";
+
 
     @Column(name = "type", nullable = false)
     @NotBlank
@@ -61,14 +69,14 @@ public class File extends AbstractBaseEntity implements HasId {
     private String body;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "package_id", nullable = false)
+    @JoinColumn(name = "pack_id", nullable = false)
     @JsonBackReference
     private Pack pack;
 
-    public File() {
+    public DataFile() {
     }
 
-    public File(Integer id, @NotBlank @Size(min = 3, max = 3) String type, @NotBlank @Size(min = 3, max = 3) String formatVersion, @NotBlank @Size(min = 4, max = 4) String year, @NotBlank @Size(min = 12, max = 12) String regNumToPfr, @NotBlank @Size(min = 3, max = 3) String districtCode, @NotBlank @Size(min = 8, max = 8) String packageNumber, @NotBlank @Size(min = 4, max = 4) String documentCode, @NotBlank @Size(min = 4, max = 4) String branchNumber, @Size(min = 10, max = 10) String outNumb, @NotBlank String body, Pack pack) {
+    public DataFile(Integer id, @NotBlank @Size(min = 3, max = 3) String type, @NotBlank @Size(min = 3, max = 3) String formatVersion, @NotBlank @Size(min = 4, max = 4) String year, @NotBlank @Size(min = 12, max = 12) String regNumToPfr, @NotBlank @Size(min = 3, max = 3) String districtCode, @NotBlank @Size(min = 8, max = 8) String packageNumber, @NotBlank @Size(min = 4, max = 4) String documentCode, @NotBlank @Size(min = 4, max = 4) String branchNumber, @Size(min = 10, max = 10) String outNumb, @NotBlank String body, Pack pack) {
         super(id);
         this.type = type;
         this.formatVersion = formatVersion;

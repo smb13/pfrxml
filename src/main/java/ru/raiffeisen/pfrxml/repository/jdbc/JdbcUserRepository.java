@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 public class JdbcUserRepository implements UserRepository {
-/*
+
     private static final BeanPropertyRowMapper<User> ROW_MAPPER = BeanPropertyRowMapper.newInstance(User.class);
 
     private final JdbcTemplate jdbcTemplate;
@@ -38,19 +38,21 @@ public class JdbcUserRepository implements UserRepository {
     public User save(User user) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", user.getId())
-                .addValue("name", user.getName())
-                .addValue("email", user.getEmail())
+                .addValue("login", user.getLogin())
+                .addValue("firstName", user.getFirstName())
+                .addValue("lastName", user.getLastName())
+                .addValue("middleName", user.getMiddleName())
                 .addValue("password", user.getPassword())
-                .addValue("registered", user.getRegistered())
                 .addValue("enabled", user.isEnabled())
-                .addValue("caloriesPerDay", user.getCaloriesPerDay());
+                .addValue("registered", user.getRegistered())
+                .addValue("enabled", user.isEnabled());
 
         if (user.isNew()) {
             Number newKey = insertUser.executeAndReturnKey(map);
             user.setId(newKey.intValue());
         } else if (namedParameterJdbcTemplate.update(
-                "UPDATE users SET name=:name, email=:email, password=:password, " +
-                        "registered=:registered, enabled=:enabled, calories_per_day=:caloriesPerDay WHERE id=:id", map) == 0) {
+                "UPDATE users SET login=:login, first_name=:firstName, last_name=:lastName, middle_name=:middleName," +
+                        "password=:password, registered=:registered, enabled=:enabled WHERE id=:id", map) == 0) {
             return null;
         }
         return user;
@@ -68,14 +70,14 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public User getByEmail(String email) {
+    public User getByLogin(String login) {
 //        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
-        List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
+        List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE login=?", ROW_MAPPER, login);
         return DataAccessUtils.singleResult(users);
     }
 
     @Override
     public List<User> getAll() {
-        return jdbcTemplate.query("SELECT * FROM users ORDER BY name, email", ROW_MAPPER);
-    }*/
+        return jdbcTemplate.query("SELECT * FROM users ORDER BY login", ROW_MAPPER);
+    }
 }

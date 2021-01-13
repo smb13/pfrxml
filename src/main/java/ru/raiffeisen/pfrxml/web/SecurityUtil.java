@@ -18,6 +18,7 @@ public class SecurityUtil {
         }
         Object principal = auth.getPrincipal();
         return (principal instanceof AuthorizedUser) ? (AuthorizedUser) principal : null;
+
     }
 
     public static AuthorizedUser get() {
@@ -25,6 +26,7 @@ public class SecurityUtil {
     }
 
     public static int authUserId() {
-        return get().getId();
+        return 100001; //till authorisation realising
+//        return get().getId();
     }
 }

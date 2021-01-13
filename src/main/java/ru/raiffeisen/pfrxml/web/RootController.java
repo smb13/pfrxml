@@ -14,5 +14,11 @@ public class RootController {
         ModelAndView modelAndView = new ModelAndView("pfrxml");
         return modelAndView;
     }
+
+    @GetMapping("/packs")
+    public ModelAndView viewPacks() {
+        ModelAndView modelAndView = new ModelAndView("packs");
+        return modelAndView;
+    }
 }
 

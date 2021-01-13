@@ -10,11 +10,10 @@
     <h3 class="widget-title">Меню</h3>
     <ul class="widget-list">
         <li><a href="./uploading">Загрузить файл</a></li>
-        <li><a href="">Работа с файлами</a></li>
+        <li><a href="./packs">Работа с файлами</a></li>
         <li><a href="">Отчеты</a></li>
     </ul>
 </div>
-
 
 </body>
 

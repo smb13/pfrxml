@@ -22,7 +22,7 @@ import ru.raiffeisen.pfrxml.web.FileValidator;
 
 @Controller
 @RequestMapping("/uploading")
-public class FileUploadController {
+public class PackUploadController {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -46,14 +46,12 @@ public class FileUploadController {
         } else {
             log.info("Fetching file");
             String uploadPath = context.getRealPath("") + File.separator + "temp" + File.separator;
-            //Now do something with file...
             File uploadedFile = new File(uploadPath+file.getFile().getOriginalFilename());
             new File(uploadPath).mkdirs();
             if (uploadedFile.exists()) {
                 uploadedFile.delete();
-            } else {
-                uploadedFile.createNewFile();
             }
+            uploadedFile.createNewFile();
             FileCopyUtils.copy(file.getFile().getBytes(), uploadedFile);
             String fileName = multipartFile.getOriginalFilename();
             model.addAttribute("fileName", fileName);

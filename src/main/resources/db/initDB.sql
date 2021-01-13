@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS dataFiles;
 DROP TABLE IF EXISTS user_roles;
-DROP TABLE IF EXISTS packs CASCADE;
-DROP TABLE IF EXISTS files;
+DROP TABLE IF EXISTS packs;
+DROP TABLE IF EXISTS users;
 
 DROP SEQUENCE IF EXISTS global_seq;
 
@@ -19,20 +19,23 @@ CREATE TABLE users
     registered      TIMESTAMP DEFAULT now() NOT NULL,
     enabled         BOOLEAN DEFAULT TRUE  NOT NULL
 );
+CREATE UNIQUE INDEX users_unique_login_idx ON users (login);
 
 CREATE TABLE packs
 (
     id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     name             VARCHAR  NOT NULL,
     user_id	         INTEGER  NOT NULL,
+    processed        BOOLEAN DEFAULT FALSE  NOT NULL,
     loaded           TIMESTAMP DEFAULT now() NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE TABLE files
+
+CREATE TABLE dataFiles
 (
     id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-    pack_id	     INTEGER  NOT NULL,
+    pack_id	         INTEGER  NOT NULL,
     type             VARCHAR  NOT NULL,
     format_version	 VARCHAR  NOT NULL,
     year             VARCHAR  NOT NULL,
@@ -45,9 +48,7 @@ CREATE TABLE files
     body             TEXT  NOT NULL,
     FOREIGN KEY (pack_id) REFERENCES packs (id) ON DELETE CASCADE
 );
-
-
-CREATE UNIQUE INDEX users_unique_login_idx ON users (login);
+CREATE UNIQUE INDEX files_unique_year_package_number_doc_code_idx ON dataFiles (year, package_number, document_code);
 
 CREATE TABLE user_roles
 (

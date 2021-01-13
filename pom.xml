@@ -119,6 +119,13 @@
     </build>
 
     <dependencies>
+        <!-- arj compress/decompress -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.20</version>
+        </dependency>
+
         <!-- Logging with SLF4J & LogBack -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -248,7 +255,7 @@
             <artifactId>spring-webmvc</artifactId>
         </dependency>
 
-        <!-- Webjars (static dependencies distributed as JAR files) -->
+        <!-- Webjars (static dependencies distributed as JAR dataFiles) -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>

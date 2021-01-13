@@ -5,7 +5,7 @@ import ru.raiffeisen.pfrxml.model.User;
 import java.util.List;
 
 public interface UserRepository {
-   /* // null if not found, when updated
+    // null if not found, when updated
     User save(User user);
 
     // false if not found
@@ -15,7 +15,7 @@ public interface UserRepository {
     User get(int id);
 
     // null if not found
-    User getByEmail(String email);
+    User getByLogin(String login);
 
-    List<User> getAll();*/
+    List<User> getAll();
 }

@@ -12,7 +12,7 @@ import static ru.raiffeisen.pfrxml.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class UserService {
 
-   /* private final UserRepository repository;
+   private final UserRepository repository;
 
     public UserService(UserRepository repository) {
         this.repository = repository;
@@ -30,8 +30,8 @@ public class UserService {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
-    public User getByEmail(String email) {
-        return checkNotFound(repository.getByEmail(email), "email=" + email);
+    public User getByLogin(String login) {
+        return checkNotFound(repository.getByLogin(login), "login=" + login);
     }
 
     public List<User> getAll() {
@@ -40,5 +40,5 @@ public class UserService {
 
     public void update(User user) {
         checkNotFoundWithId(repository.save(user), user.getId());
-    }*/
+    }
 }
