@@ -41,9 +41,9 @@ public class PackService  {
         return packRepository.getAll();
     }
 
-    public void update(Pack pack) {
+    public void update(Pack pack, int userId) {
         Assert.notNull(pack, "pack must not be null");
-        checkNotFoundWithId(packRepository.save(pack), pack.id());
+        checkNotFoundWithId(packRepository.save(pack, userId), pack.id());
     }
 
     public Pack create(Pack pack) {

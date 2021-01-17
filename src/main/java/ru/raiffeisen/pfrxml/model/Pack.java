@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @NamedQueries({
-        @NamedQuery(name = Pack.ALL_SORTED, query = "SELECT p FROM Pack p WHERE p.user.id=:userId ORDER BY p.loaded DESC"),
+        @NamedQuery(name = Pack.ALL_SORTED, query = "SELECT p FROM Pack p ORDER BY p.loaded DESC"),
         @NamedQuery(name = Pack.DELETE, query = "DELETE FROM Pack p WHERE p.id=:id AND p.user.id=:userId"),
         @NamedQuery(name = Pack.GET_BETWEEN, query = "SELECT p FROM Pack p WHERE p.loaded >= :startDateTime AND p.loaded < :endDateTime ORDER BY p.loaded DESC")
 })
@@ -27,7 +27,7 @@ public class Pack extends AbstractBaseEntity {
 
     @Column(name = "name", nullable = false, unique = false)
     @NotBlank
-    @Size(max = 12)
+    @Size(max = 13)
     private String name;
 
     @Column(name = "loaded", nullable = false, columnDefinition = "timestamp default now()")
@@ -47,7 +47,7 @@ public class Pack extends AbstractBaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "pack")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonManagedReference
-    @OnDelete(action = OnDeleteAction.CASCADE) //https://stackoverflow.com/a/44988100/548473
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<DataFile> dataFiles;
 
     public Pack(Integer id, String name, LocalDateTime loaded, boolean processed) {

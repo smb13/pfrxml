@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PackRepository {
-        // null if updated pack do not belong to userId
         Pack save(Pack pack);
 
+        // null if updated pack do not belong to userId
         Pack save(Pack pack, int userId);
 
         // false if pack do not belong to userId

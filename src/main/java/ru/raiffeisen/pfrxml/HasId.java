@@ -5,7 +5,7 @@ import org.springframework.util.Assert;
 public interface HasId {
     Integer getId();
 
-    void setId(Integer id);
+    void setId(int id);
 
     default boolean isNew() {
         return getId() == null;

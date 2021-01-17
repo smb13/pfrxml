@@ -50,7 +50,7 @@ public abstract class AbstractPackController {
         int userId = SecurityUtil.authUserId();
         assureIdConsistent(pack, id);
         log.info("update {} for user {}", pack, userId);
-        service.update(pack);
+        service.update(pack, userId);
     }
 
 

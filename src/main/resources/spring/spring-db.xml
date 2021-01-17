@@ -23,7 +23,7 @@
 <!--        <jdbc:script location="${jdbc.initLocation}"/>-->
 <!--        <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>-->
 <!--    </jdbc:initialize-database>-->
-
+    <tx:annotation-driven/>
     <!--pooling-->
     <bean id="dataSource"
          class="org.apache.tomcat.jdbc.pool.DataSource"
@@ -58,6 +58,9 @@
                 <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/> <!--default-->
+
+                <entry key="javax.persistence.validation.group.pre-persist" value="ru.raiffeisen.pfrxml.View$Persist"/>
+                <entry key="javax.persistence.validation.group.pre-update" value="ru.raiffeisen.pfrxml.View$Persist"/>
             </map>
         </property>
 
@@ -67,5 +70,7 @@
         </property>
     </bean>
 
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory"/>
 
 </beans>

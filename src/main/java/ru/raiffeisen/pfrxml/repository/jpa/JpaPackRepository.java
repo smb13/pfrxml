@@ -1,8 +1,10 @@
 package ru.raiffeisen.pfrxml.repository.jpa;
 
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.raiffeisen.pfrxml.model.DataFile;
 import ru.raiffeisen.pfrxml.model.Pack;
 import ru.raiffeisen.pfrxml.model.User;
 import ru.raiffeisen.pfrxml.repository.PackRepository;
@@ -45,9 +47,9 @@ public class JpaPackRepository implements PackRepository {
         return em.merge(pack);
     }
 
-
     @Override
     @Transactional
+    @Modifying
     public boolean delete(int id, int userId) {
         Query nq = em.createNamedQuery(Pack.DELETE)
                 .setParameter("id", id)
