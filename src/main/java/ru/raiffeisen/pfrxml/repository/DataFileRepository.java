@@ -3,18 +3,19 @@ package ru.raiffeisen.pfrxml.repository;
 
 import ru.raiffeisen.pfrxml.model.DataFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface DataFileRepository {
+    DataFile get(int id);
 
-    DataFile save(DataFile dataFile);
+    DataFile get(int id, int packId);
+
+    List<DataFile> getByPack(int packId);
+
+    boolean deleteByPack (int packId);
+
+    DataFile save(DataFile dataFile, int packId);
 
     boolean delete(int id);
 
-    DataFile get(int id);
-
-    List<DataFile> getAllByPack(int packId);
-
-    List<DataFile> getAll();
 }

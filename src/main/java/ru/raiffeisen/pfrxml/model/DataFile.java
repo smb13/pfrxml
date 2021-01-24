@@ -8,16 +8,19 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @NamedQueries({
-        @NamedQuery(name = DataFile.ALL_SORTED, query = "SELECT d FROM DataFile d ORDER BY d.documentCode DESC"),
         @NamedQuery(name = DataFile.DELETE, query = "DELETE FROM DataFile d WHERE d.id=:id"),
-        @NamedQuery(name = DataFile.ALL_BY_PACK, query = "SELECT d FROM DataFile d WHERE d.pack.id=:packId ORDER BY d.documentCode DESC")})
+        @NamedQuery(name = DataFile.DELETE_BY_PACK, query = "DELETE FROM DataFile d WHERE d.pack=:packId"),
+        @NamedQuery(name = DataFile.ALL_BY_PACK, query = "SELECT d FROM DataFile d WHERE d.pack.id=:packId ORDER BY d.documentCode DESC"),
+        @NamedQuery(name = DataFile.GET_WITH_PACK, query = "DELETE FROM DataFile d WHERE d.id=:id AND d.pack=:packId")
+})
 
 @Entity
 @Table(name = "dataFiles")
 public class DataFile extends AbstractBaseEntity implements HasId {
-    public static final String ALL_SORTED = "DataFile.getAll";
     public static final String DELETE = "DataFile.delete";
+    public static final String DELETE_BY_PACK = "DataFile.delete";
     public static final String ALL_BY_PACK = "DataFile.getAllByPack";
+    public static final String GET_WITH_PACK = "DataFile.getAllByPack";
 
 
     @Column(name = "type", nullable = false)
@@ -174,4 +177,11 @@ public class DataFile extends AbstractBaseEntity implements HasId {
         this.body = body;
     }
 
+    public Pack getPack() {
+        return pack;
+    }
+
+    public void setPack(Pack pack) {
+        this.pack = pack;
+    }
 }

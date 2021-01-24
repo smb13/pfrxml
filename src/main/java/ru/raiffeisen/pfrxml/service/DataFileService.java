@@ -18,25 +18,34 @@ public class DataFileService  {
         this.repository = repository;
     }
 
-    public DataFile get(int id, int userId) {
+    public DataFile get(int id) {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
-    public void delete(int id, int userId) {
+    public DataFile get(int id, int packId) {
+        return checkNotFoundWithId(repository.get(id, packId), id);
+    }
+
+    public List<DataFile> getByPack(int packId) {
+        return repository.getByPack(packId);
+    }
+
+
+    public void delete(int id) {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
-        public List<DataFile> getAll() {
-        return repository.getAll();
+    public void deleteByPack(int packId) {
+        checkNotFoundWithId(repository.deleteByPack(packId), packId);
     }
 
-    public void update(DataFile dataFile) {
+    public DataFile create(DataFile dataFile, int packId) {
         Assert.notNull(dataFile, "dataFile must not be null");
-        checkNotFoundWithId(repository.save(dataFile), dataFile.id());
+        return repository.save(dataFile, packId);
     }
 
-    public DataFile create(DataFile dataFile, int userId) {
+    public void update(DataFile dataFile, int packId) {
         Assert.notNull(dataFile, "dataFile must not be null");
-        return repository.save(dataFile);
+        checkNotFoundWithId(repository.save(dataFile, packId), dataFile.id());
     }
 }

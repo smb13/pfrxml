@@ -3,6 +3,8 @@ package ru.raiffeisen.pfrxml.repository.jpa;
 import ru.raiffeisen.pfrxml.model.DataFile;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.raiffeisen.pfrxml.model.Pack;
+import ru.raiffeisen.pfrxml.model.User;
 import ru.raiffeisen.pfrxml.repository.DataFileRepository;
 
 import javax.persistence.EntityManager;
@@ -18,7 +20,8 @@ public class JpaDataFileRepository implements DataFileRepository {
 
     @Override
     @Transactional
-    public DataFile save(DataFile dataFile) {
+    public DataFile save(DataFile dataFile, int packId) {
+        dataFile.setPack(em.getReference(Pack.class, packId));
         if (dataFile.isNew()) {
             em.persist(dataFile);
             return dataFile;
@@ -27,6 +30,16 @@ public class JpaDataFileRepository implements DataFileRepository {
         }
         return em.merge(dataFile);
     }
+
+
+    @Override
+    @Transactional
+    public boolean deleteByPack(int packId){
+        return em.createNamedQuery(DataFile.DELETE_BY_PACK)
+                .setParameter("packId", packId)
+                .executeUpdate() != 0;
+    }
+
 
     @Override
     @Transactional
@@ -38,22 +51,22 @@ public class JpaDataFileRepository implements DataFileRepository {
 
     @Override
     public DataFile get(int id) {
-        DataFile dataFile = em.find(DataFile.class, id);
-        return dataFile;
+        return em.find(DataFile.class, id);
     }
 
     @Override
-    public List<DataFile> getAllByPack(int packId) {
+    public List<DataFile> getByPack(int packId) {
         return em.createNamedQuery(DataFile.ALL_BY_PACK)
                 .setParameter("packId", packId)
                 .getResultList();
     }
 
     @Override
-    public List<DataFile> getAll() {
-        return em.createNamedQuery(DataFile.ALL_SORTED, DataFile.class)
-                .getResultList();
+    public DataFile get(int id, int packId) {
+        return em.createNamedQuery(DataFile.GET_WITH_PACK)
+                .setParameter("id", id)
+                .setParameter("packId", packId)
+                .unwrap(DataFile.class);
     }
-
 
 }
