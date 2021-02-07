@@ -6,7 +6,7 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
-import ru.raiffeisen.pfrxml.json.JsonUtil;
+import ru.raiffeisen.pfrxml.web.json.JsonUtil;
 import ru.raiffeisen.pfrxml.model.User;
 import ru.raiffeisen.pfrxml.web.AuthorizedUser;
 

@@ -1,4 +1,4 @@
-package ru.raiffeisen.pfrxml.json;
+package ru.raiffeisen.pfrxml.web.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static ru.raiffeisen.pfrxml.json.JacksonObjectMapper.getMapper;
+import static ru.raiffeisen.pfrxml.web.json.JacksonObjectMapper.getMapper;
 
 public class JsonUtil {
     public static <T> List<T> readValues(String json, Class<T> clazz) {

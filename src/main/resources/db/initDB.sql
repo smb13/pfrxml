@@ -32,7 +32,7 @@ CREATE TABLE packs
 );
 
 
-CREATE TABLE dataFiles
+CREATE TABLE datafiles
 (
     id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     pack_id	         INTEGER  NOT NULL,

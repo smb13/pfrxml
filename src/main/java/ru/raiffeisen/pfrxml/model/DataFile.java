@@ -9,18 +9,18 @@ import javax.validation.constraints.*;
 
 @NamedQueries({
         @NamedQuery(name = DataFile.DELETE, query = "DELETE FROM DataFile d WHERE d.id=:id"),
-        @NamedQuery(name = DataFile.DELETE_BY_PACK, query = "DELETE FROM DataFile d WHERE d.pack=:packId"),
-        @NamedQuery(name = DataFile.ALL_BY_PACK, query = "SELECT d FROM DataFile d WHERE d.pack.id=:packId ORDER BY d.documentCode DESC"),
-        @NamedQuery(name = DataFile.GET_WITH_PACK, query = "DELETE FROM DataFile d WHERE d.id=:id AND d.pack=:packId")
+        @NamedQuery(name = DataFile.DELETE_BY_PACK, query = "DELETE FROM DataFile d WHERE d.pack.id=:packId"),
+        @NamedQuery(name = DataFile.ALL_BY_PACK, query = "SELECT d FROM DataFile d WHERE d.pack.id=:packId ORDER BY d.documentCode, d.packageNumber"),
+        @NamedQuery(name = DataFile.GET_WITH_PACK, query = "SELECT d FROM DataFile d WHERE d.id=:id AND d.pack.id=:packId")
 })
 
 @Entity
-@Table(name = "dataFiles")
+@Table(name = "datafiles")
 public class DataFile extends AbstractBaseEntity implements HasId {
     public static final String DELETE = "DataFile.delete";
-    public static final String DELETE_BY_PACK = "DataFile.delete";
+    public static final String DELETE_BY_PACK = "DataFile.deleteByPack";
     public static final String ALL_BY_PACK = "DataFile.getAllByPack";
-    public static final String GET_WITH_PACK = "DataFile.getAllByPack";
+    public static final String GET_WITH_PACK = "DataFile.getWithPack";
 
 
     @Column(name = "type", nullable = false)
@@ -40,7 +40,7 @@ public class DataFile extends AbstractBaseEntity implements HasId {
 
     @Column(name = "reg_num_to_pfr", nullable = false)
     @NotBlank
-    @Size(min = 12, max = 12)
+    @Size(min = 14, max = 14)
     private String regNumToPfr;
 
     @Column(name = "district_code", nullable = false)
@@ -50,7 +50,7 @@ public class DataFile extends AbstractBaseEntity implements HasId {
 
     @Column(name = "package_number", nullable = false)
     @NotBlank
-    @Size(min = 8, max = 8)
+    @Size(min = 9, max = 9)
     private String packageNumber;
 
     @Column(name = "document_code", nullable = false)
@@ -71,9 +71,11 @@ public class DataFile extends AbstractBaseEntity implements HasId {
     @NotBlank
     private String body;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pack_id", nullable = false)
     @JsonBackReference
+    @NotNull
     private Pack pack;
 
     public DataFile() {
@@ -94,7 +96,19 @@ public class DataFile extends AbstractBaseEntity implements HasId {
         this.pack = pack;
     }
 
-    
+    public DataFile(@NotBlank @Size(min = 3, max = 3) String type, @NotBlank @Size(min = 3, max = 3) String formatVersion, @NotBlank @Size(min = 4, max = 4) String year, @NotBlank @Size(min = 12, max = 12) String regNumToPfr, @NotBlank @Size(min = 3, max = 3) String districtCode, @NotBlank @Size(min = 8, max = 8) String packageNumber, @NotBlank @Size(min = 4, max = 4) String documentCode, @NotBlank @Size(min = 4, max = 4) String branchNumber, @Size(min = 10, max = 10) String outNumb, @NotBlank String body) {
+        super();
+        this.type = type;
+        this.formatVersion = formatVersion;
+        this.year = year;
+        this.regNumToPfr = regNumToPfr;
+        this.districtCode = districtCode;
+        this.packageNumber = packageNumber;
+        this.documentCode = documentCode;
+        this.branchNumber = branchNumber;
+        this.outNumb = outNumb;
+        this.body = body;
+    }
 
 
     public String getType() {

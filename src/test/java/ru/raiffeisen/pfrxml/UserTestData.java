@@ -1,6 +1,6 @@
 package ru.raiffeisen.pfrxml;
 
-import ru.raiffeisen.pfrxml.json.JsonUtil;
+import ru.raiffeisen.pfrxml.web.json.JsonUtil;
 import ru.raiffeisen.pfrxml.model.Role;
 import ru.raiffeisen.pfrxml.model.User;
 

@@ -1,4 +1,4 @@
-package ru.raiffeisen.pfrxml.json;
+package ru.raiffeisen.pfrxml.web.json;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;

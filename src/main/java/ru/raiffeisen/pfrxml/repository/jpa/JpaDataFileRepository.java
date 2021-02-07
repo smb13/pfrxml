@@ -4,7 +4,6 @@ import ru.raiffeisen.pfrxml.model.DataFile;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.raiffeisen.pfrxml.model.Pack;
-import ru.raiffeisen.pfrxml.model.User;
 import ru.raiffeisen.pfrxml.repository.DataFileRepository;
 
 import javax.persistence.EntityManager;
@@ -49,6 +48,7 @@ public class JpaDataFileRepository implements DataFileRepository {
                 .executeUpdate() != 0;
     }
 
+
     @Override
     public DataFile get(int id) {
         return em.find(DataFile.class, id);
@@ -56,17 +56,20 @@ public class JpaDataFileRepository implements DataFileRepository {
 
     @Override
     public List<DataFile> getByPack(int packId) {
-        return em.createNamedQuery(DataFile.ALL_BY_PACK)
+        List <DataFile> result = em.createNamedQuery(DataFile.ALL_BY_PACK, DataFile.class)
                 .setParameter("packId", packId)
                 .getResultList();
+        return result.size() == 0 ? null : result;
     }
 
     @Override
     public DataFile get(int id, int packId) {
-        return em.createNamedQuery(DataFile.GET_WITH_PACK)
+        List <DataFile> result = em.createNamedQuery(DataFile.GET_WITH_PACK, DataFile.class)
                 .setParameter("id", id)
                 .setParameter("packId", packId)
-                .unwrap(DataFile.class);
+                .getResultList();
+        return result.size() == 0 ? null : result.get(0);
+//                .getSingleResult();
     }
 
 }

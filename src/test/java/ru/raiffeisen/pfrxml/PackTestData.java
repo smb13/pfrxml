@@ -13,7 +13,6 @@ import static ru.raiffeisen.pfrxml.UserTestData.admin;
 
 public class PackTestData {
         public static final TestMatcher<Pack> PACK_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Pack.class, "user", "dataFiles");
-        public static TestMatcher<Pack> PACK_TO_MATCHER = TestMatcher.usingEqualsComparator(Pack.class);
 
         public static final int NOT_FOUND = 10;
         public static final int PACK1_ID = START_SEQ + 3;
@@ -33,7 +32,7 @@ public class PackTestData {
 
         }
 
-        public static Pack getNew() {
+        public static Pack getNewPack() {
             return new Pack(null, "223122203.001", of(2020, Month.DECEMBER, 22, 17, 40), false);
         }
 

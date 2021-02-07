@@ -33,9 +33,9 @@ class PackServiceTest extends AbstractServiceTest{
 
     @Test
     void create() {
-        Pack created = service.create(getNew(), USER_ID);
+        Pack created = service.create(getNewPack(), USER_ID);
         int newId = created.id();
-        Pack newPack = getNew();
+        Pack newPack = getNewPack();
         newPack.setId(newId);
         PACK_MATCHER.assertMatch(created, newPack);
         PACK_MATCHER.assertMatch(service.get(newId), newPack);

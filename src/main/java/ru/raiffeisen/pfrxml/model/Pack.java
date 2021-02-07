@@ -45,7 +45,7 @@ public class Pack extends AbstractBaseEntity {
     @NotNull
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pack")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pack")
     @JsonManagedReference
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<DataFile> dataFiles;

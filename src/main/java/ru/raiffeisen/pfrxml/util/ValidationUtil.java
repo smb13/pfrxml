@@ -5,9 +5,8 @@ import org.slf4j.Logger;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 import ru.raiffeisen.pfrxml.model.AbstractBaseEntity;
+import ru.raiffeisen.pfrxml.util.exception.ErrorType;
 import ru.raiffeisen.pfrxml.util.exception.NotFoundException;
-
-import javax.lang.model.type.ErrorType;
 import javax.servlet.http.HttpServletRequest;
 
 public class ValidationUtil {
