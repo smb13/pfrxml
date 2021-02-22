@@ -7,6 +7,7 @@ import ru.raiffeisen.pfrxml.repository.DataFileRepository;
 
 import java.util.List;
 
+import static ru.raiffeisen.pfrxml.util.ValidationUtil.checkNotFound;
 import static ru.raiffeisen.pfrxml.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -27,7 +28,7 @@ public class DataFileService  {
     }
 
     public List<DataFile> getByPack(int packId) {
-        return repository.getByPack(packId);
+        return checkNotFoundWithId(repository.getByPack(packId), packId);
     }
 
 
