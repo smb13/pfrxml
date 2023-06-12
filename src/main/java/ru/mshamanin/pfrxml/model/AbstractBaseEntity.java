@@ -1,4 +1,5 @@
 package ru.mshamanin.pfrxml.model;
+
 import org.hibernate.Hibernate;
 import org.springframework.util.Assert;
 import ru.mshamanin.pfrxml.HasId;

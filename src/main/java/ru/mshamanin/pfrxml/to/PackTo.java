@@ -4,7 +4,7 @@ import ru.mshamanin.pfrxml.model.Pack;
 
 import java.time.LocalDateTime;
 
-public class PackTo extends BaseTo{
+public class PackTo extends BaseTo {
     private final String name;
     private final LocalDateTime loaded;
     private final boolean processed;

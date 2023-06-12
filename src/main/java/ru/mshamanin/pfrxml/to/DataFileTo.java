@@ -1,6 +1,6 @@
 package ru.mshamanin.pfrxml.to;
 
-public class DataFileTo extends BaseTo{
+public class DataFileTo extends BaseTo {
     private final String fileName;
     private final String body;
 

@@ -25,16 +25,15 @@ public class DataFileUtil {
         String fileName;
 
 
-
-        if (dateFileTo.getFileName().toUpperCase().matches(REGEX_PFR)){
-
+        if (dateFileTo.getFileName().toUpperCase().matches(REGEX_PFR)) {
 
 
-        } else if (dateFileTo.getFileName().toUpperCase().matches(REGEX_OUT)){
+        } else if (dateFileTo.getFileName().toUpperCase().matches(REGEX_OUT)) {
 
         } else {
             return null;
-        };
+        }
+        ;
         return null;
     }
 

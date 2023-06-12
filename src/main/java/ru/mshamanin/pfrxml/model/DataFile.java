@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import ru.mshamanin.pfrxml.HasId;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @NamedQueries({
         @NamedQuery(name = DataFile.DELETE, query = "DELETE FROM DataFile d WHERE d.id=:id"),
@@ -71,7 +73,7 @@ public class DataFile extends AbstractBaseEntity implements HasId {
     @NotBlank
     private String body;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
+    //    @ManyToOne(fetch = FetchType.LAZY)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pack_id", nullable = false)
     @JsonBackReference

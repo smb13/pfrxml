@@ -2,12 +2,11 @@ package ru.mshamanin.pfrxml.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import ru.mshamanin.pfrxml.HasId;
 
-import javax.persistence.Entity;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -70,7 +69,7 @@ public class User extends AbstractBaseEntity implements HasId {
     private LocalDateTime registered = LocalDateTime.now();
 //    private Date registered = new Date();
 
-//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    //    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_unique_idx")})
@@ -79,7 +78,7 @@ public class User extends AbstractBaseEntity implements HasId {
 //    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 200)
     @JoinColumn(name = "id") //https://stackoverflow.com/a/62848296/548473
-    @OnDelete(action= OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -92,15 +91,15 @@ public class User extends AbstractBaseEntity implements HasId {
     }
 
     public User(User u) {
-        this(u.getId(), u.getLogin(), u.getFirstName(), u.getLastName(),u.getMiddleName(), u.getPhoneNumber(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles(), u.getPacks());
+        this(u.getId(), u.getLogin(), u.getFirstName(), u.getLastName(), u.getMiddleName(), u.getPhoneNumber(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles(), u.getPacks());
     }
 
     public User(Integer id, String login, String firstName, String lastName, String middleName, String phoneNumber, String password, Role role, Role... roles) {
-        this(id, login, firstName, lastName, middleName, phoneNumber, password, true,  LocalDateTime.now(), EnumSet.of(role, roles));
+        this(id, login, firstName, lastName, middleName, phoneNumber, password, true, LocalDateTime.now(), EnumSet.of(role, roles));
     }
 
     public User(Integer id, String login, String firstName, String lastName, String middleName, String phoneNumber, String password, Collection<Role> roles) {
-        this(id, login, firstName, lastName, middleName, phoneNumber, password, true,  LocalDateTime.now(), roles);
+        this(id, login, firstName, lastName, middleName, phoneNumber, password, true, LocalDateTime.now(), roles);
     }
 
     public User(String login, String firstName, String lastName, String middleName, String phoneNumber, String password, boolean enabled, LocalDateTime registered, Collection<Role> roles) {

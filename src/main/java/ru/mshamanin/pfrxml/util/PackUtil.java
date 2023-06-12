@@ -1,60 +1,64 @@
 package ru.mshamanin.pfrxml.util;
 
-import org.apache.commons.compress.archivers.ArchiveException;
-import org.apache.commons.compress.archivers.arj.ArjArchiveEntry;
-import org.apache.commons.compress.archivers.arj.ArjArchiveInputStream;
-import org.apache.commons.compress.compressors.CompressorException;
-import org.apache.commons.compress.compressors.CompressorStreamFactory;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.mshamanin.pfrxml.to.DataFileTo;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class PackUtil {
     private static final Logger log = LoggerFactory.getLogger(PackUtil.class);
-//    private static final int BUFFER = 1024;
 
-//    add logs, make return optional
-    public static List<DataFileTo> decompressPack(File packFile) throws IOException {
+    //TODO  add more logs, make return DataFileTo
+    public static List<DataFileTo> unzipPack(File packFile) throws IOException {
         List<DataFileTo> dataFileTos = new ArrayList<>();
-        try (ArjArchiveInputStream aais = new ArjArchiveInputStream(
-                new CompressorStreamFactory().createCompressorInputStream(
-                        new BufferedInputStream(Files.newInputStream(packFile.toPath()))))) {
-            ArjArchiveEntry entry;
-            while ((entry = aais.getNextEntry()) != null) {
+        try (ZipFile file = new ZipFile(packFile.getCanonicalPath())) {
+            var entries = file.entries();
+            String unzipPath = new File(file.getName()).getParent() + File.separator + packFile.getName().split("\\.")[0] + File.separator;
+            File unzipFolder = new File(unzipPath);
+            if (!unzipFolder.exists()) {
+                unzipFolder.mkdirs();
+            }
+            while (entries.hasMoreElements()) {
+                var entry = entries.nextElement();
                 if (entry.isDirectory()) {
-                    log.warn("dir:{}", entry.getName());
+                    processDirectory(unzipPath, entry);
                 } else {
-                    int size = (int) entry.getSize();
-                    byte[] content = new byte[size];
-                    int readCount = aais.read(content, 0, size);
-                    log.info("fileName:{}", entry.getName());
-                    ByteArrayInputStream bais = new ByteArrayInputStream(content, 0, readCount);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    IOUtils.copy(bais, baos);
-                    bais.close();
-                    baos.flush();
-                    baos.close();
-                    String body = baos.toString("utf-8");
-                    String fileName = entry.getName();
-                    dataFileTos.add(new DataFileTo(fileName, body));
+                    processFile(file, unzipPath, entry);
                 }
             }
-        } catch (CompressorException e) {
-            log.debug(e.toString());
-            throw new IOException(e);
-        } catch (ArchiveException e) {
-            log.debug(e.toString());
-            throw new IOException(e);
         }
         return dataFileTos;
     }
 
+    private static void processDirectory(String unzipPath, ZipEntry entry) {
+        var newDirectory = unzipPath + entry.getName();
+        log.info("Creating Directory: {}", newDirectory);
+        var directory = new File(newDirectory);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+    }
 
-
+    private static void processFile(ZipFile file, String unzipPath, ZipEntry entry) throws IOException {
+        try (
+                InputStream is = file.getInputStream(entry);
+                BufferedInputStream bis = new BufferedInputStream(is)
+        ) {
+            var uncompressedFileName = unzipPath + entry.getName();
+            try (
+                    FileOutputStream os = new FileOutputStream(uncompressedFileName);
+                    BufferedOutputStream bos = new BufferedOutputStream(os)
+            ) {
+                while (bis.available() > 0) {
+                    bos.write(bis.read());
+                }
+            }
+        }
+        log.info("Written: {}", entry.getName());
+    }
 }

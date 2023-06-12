@@ -12,7 +12,7 @@ public interface DataFileRepository {
 
     List<DataFile> getByPack(int packId);
 
-    boolean deleteByPack (int packId);
+    boolean deleteByPack(int packId);
 
     DataFile save(DataFile dataFile, int packId);
 

@@ -5,19 +5,17 @@ import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.mshamanin.pfrxml.model.Pack;
 import ru.mshamanin.pfrxml.View;
+import ru.mshamanin.pfrxml.model.Pack;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDate;
 import java.util.List;
 
-
 @ApiIgnore
 @RestController
 @RequestMapping(value = "/profile/packs", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PackUIController extends AbstractPackController {
-
 
     @Override
     @GetMapping

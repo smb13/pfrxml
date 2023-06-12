@@ -10,11 +10,11 @@ import ru.mshamanin.pfrxml.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.mshamanin.pfrxml.UserTestData.ADMIN_ID;
 import static ru.mshamanin.pfrxml.UserTestData.USER_ID;
 
-class PackServiceTest extends AbstractServiceTest{
+class PackServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected PackService service;
@@ -50,7 +50,7 @@ class PackServiceTest extends AbstractServiceTest{
     void deleteNotOwn() {
         assertThrows(NotFoundException.class, () -> service.delete(PackTestData.PACK1_ID, ADMIN_ID));
     }
-    
+
     @Test
     void update() {
         Pack updated = PackTestData.getUpdated();
@@ -74,8 +74,8 @@ class PackServiceTest extends AbstractServiceTest{
     @Test
     void getBetweenInclusive() {
         PackTestData.PACK_MATCHER.assertMatch(service.getBetweenInclusive(
-                LocalDate.of(2020, Month.DECEMBER, 19),
-                LocalDate.of(2020, Month.DECEMBER, 20)),
+                        LocalDate.of(2020, Month.DECEMBER, 19),
+                        LocalDate.of(2020, Month.DECEMBER, 20)),
                 PackTestData.pack1, PackTestData.adminPack);
     }
 

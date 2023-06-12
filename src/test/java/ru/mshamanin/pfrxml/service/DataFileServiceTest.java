@@ -7,9 +7,9 @@ import ru.mshamanin.pfrxml.PackTestData;
 import ru.mshamanin.pfrxml.model.DataFile;
 import ru.mshamanin.pfrxml.util.exception.NotFoundException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class DataFileServiceTest extends AbstractServiceTest{
+class DataFileServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected DataFileService service;

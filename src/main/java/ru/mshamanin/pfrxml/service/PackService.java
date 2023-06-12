@@ -14,7 +14,7 @@ import static ru.mshamanin.pfrxml.util.DateTimeUtil.atStartOfNextDayOrMax;
 import static ru.mshamanin.pfrxml.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-public class PackService  {
+public class PackService {
 
     private final PackRepository packRepository;
 

@@ -7,11 +7,10 @@ import ru.mshamanin.pfrxml.repository.DataFileRepository;
 
 import java.util.List;
 
-import static ru.mshamanin.pfrxml.util.ValidationUtil.checkNotFound;
 import static ru.mshamanin.pfrxml.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-public class DataFileService  {
+public class DataFileService {
 
     private final DataFileRepository repository;
 
