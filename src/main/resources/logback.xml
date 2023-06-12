@@ -20,7 +20,9 @@
         </encoder>
     </appender>
 
-    <logger name="ru.raiffeisen.pfrxml" level="debug"/>
+    <logger name="ru.mshamanin.pfrxml" level="debug"/>
+    <logger name="org.springframework.data" level="debug"/>
+    <logger name="org.springframework.web.servlet" level="debug"/>
 
     <root level="info">
         <appender-ref ref="file"/>

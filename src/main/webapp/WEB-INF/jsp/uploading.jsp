@@ -6,7 +6,7 @@
 <jsp:include page="fragments/header.jsp"/>
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
-<%--@elvariable id="uploading" type="ru.raiffeisen.pfrxml.web.FileModel"--%>
+<%--@elvariable id="uploading" type="ru.mshamanin.pfrxml.web.FileModel"--%>
 <form:form method = "POST" modelAttribute = "uploading"
            enctype = "multipart/form-data">
     Please select a file to upload :

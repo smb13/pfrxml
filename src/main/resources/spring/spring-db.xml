@@ -16,13 +16,13 @@
 
     <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
 
-<!--    <context:component-scan base-package="ru.raiffeisen.**.repository.jdbc"/>-->
-    <context:component-scan base-package="ru.raiffeisen.**.repository.jpa"/>
+<!--    <context:component-scan base-package="ru.mshamanin.**.repository.jdbc"/>-->
+    <context:component-scan base-package="ru.mshamanin.**.repository.jpa"/>
 
-<!--    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">-->
-<!--        <jdbc:script location="${jdbc.initLocation}"/>-->
-<!--        <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>-->
-<!--    </jdbc:initialize-database>-->
+    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+        <jdbc:script location="${jdbc.initLocation}"/>
+        <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
+    </jdbc:initialize-database>
     <tx:annotation-driven/>
     <!--pooling-->
     <bean id="dataSource"
@@ -43,7 +43,7 @@
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"
-          p:packagesToScan="ru.raiffeisen.**.model">
+          p:packagesToScan="ru.mshamanin.**.model">
         <!--p:persistenceUnitName="persistenceUnit">-->
 
         <property name="jpaPropertyMap">
@@ -59,8 +59,8 @@
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/> <!--default-->
 
-                <entry key="javax.persistence.validation.group.pre-persist" value="ru.raiffeisen.pfrxml.View$Persist"/>
-                <entry key="javax.persistence.validation.group.pre-update" value="ru.raiffeisen.pfrxml.View$Persist"/>
+                <entry key="javax.persistence.validation.group.pre-persist" value="ru.mshamanin.pfrxml.View$Persist"/>
+                <entry key="javax.persistence.validation.group.pre-update" value="ru.mshamanin.pfrxml.View$Persist"/>
             </map>
         </property>
 

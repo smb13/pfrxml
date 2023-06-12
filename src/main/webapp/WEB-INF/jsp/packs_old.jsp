@@ -26,7 +26,7 @@
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
         <c:forEach items="${packs}" var="pack">
-            <jsp:useBean id="pack" type="ru.raiffeisen.pfrxml.model.Pack"/>
+            <jsp:useBean id="pack" type="ru.mshamanin.pfrxml.model.Pack"/>
             <tr data-packExcess="${pack.processed}">
                 <td>
                         <%--${pack.dateTime.toLocalDate()} ${pack.dateTime.toLocalTime()}--%>
