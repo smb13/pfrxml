@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import ru.mshamanin.pfrxml.web.FileValidator;
+import ru.mshamanin.pfrxml.web.PackValidator;
 import ru.mshamanin.pfrxml.web.FileModel;
 
 @Controller
@@ -26,9 +26,9 @@ public class PackUploadController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private final ServletContext context;
-    private final FileValidator fileValidator;
+    private final PackValidator fileValidator;
 
-    public PackUploadController(ServletContext context, FileValidator fileValidator) {
+    public PackUploadController(ServletContext context, PackValidator fileValidator) {
         this.context = context;
         this.fileValidator = fileValidator;
     }

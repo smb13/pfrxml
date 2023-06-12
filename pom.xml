@@ -107,7 +107,7 @@
                     </configuration>
                     <deployables>
                         <deployable>
-                            <groupId>ru.raiffeisen</groupId>
+                            <groupId>ru.mshamanin</groupId>
                             <artifactId>pfrxml</artifactId>
                             <type>war</type>
                             <properties>
