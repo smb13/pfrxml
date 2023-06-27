@@ -1,5 +1,6 @@
 package ru.mshamanin.pfrxml.web.pack;
 
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,38 +12,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import ru.mshamanin.pfrxml.service.PackService;
 import ru.mshamanin.pfrxml.util.PackUtil;
 import ru.mshamanin.pfrxml.web.FileModel;
 import ru.mshamanin.pfrxml.web.PackValidator;
+import ru.mshamanin.pfrxml.web.SecurityUtil;
 
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/uploading")
-public class PackUploadController {
+public class PackUploadController{
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private final ServletContext context;
     private final PackValidator fileValidator;
+    private final PackService packService;
 
-    public PackUploadController(ServletContext context, PackValidator fileValidator) {
-        this.context = context;
-        this.fileValidator = fileValidator;
-    }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView fileUploadPage() {
+    public ModelAndView uploadPage() {
         FileModel file = new FileModel();
         return new ModelAndView("uploading", "command", file);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String fileUpload(@Validated FileModel file, BindingResult result, ModelMap model) throws IOException {
-        MultipartFile multipartFile = file.getFile();
+    public String packUpload(@Validated FileModel file, BindingResult result, ModelMap model) throws IOException {
         fileValidator.validate(file, result);
+        int userId = SecurityUtil.authUserId();
         if (result.hasErrors()) {
             log.warn("validation file errors");
             return "pfrxml";
@@ -75,10 +76,9 @@ public class PackUploadController {
             }
             FileCopyUtils.copy(file.getFile().getBytes(), uploadedFile);
             log.info("file {} uploaded on server", uploadedFile.getCanonicalPath());
-            PackUtil.unzipPack(uploadedFile);
-            String fileName = multipartFile.getOriginalFilename();
-            model.addAttribute("fileName", fileName);
-            log.info("Fetching file finished successfully");
+            packService.upload(uploadedFile, userId);
+            log.info("fetching file finished successfully");
+            model.addAttribute("fileName", file.getFile().getOriginalFilename());
             return "success";
         }
     }

@@ -59,6 +59,14 @@ public class Pack extends AbstractBaseEntity {
         this.processed = processed;
     }
 
+    public Pack(String name, List<DataFile> dataFiles) {
+        super();
+        this.name = name;
+        this.loaded = LocalDateTime.now();
+        this.processed = false;
+        this.dataFiles = dataFiles;
+    }
+
     public Pack(Integer id, String name, User user) {
         super(id);
         this.name = name;
@@ -72,9 +80,6 @@ public class Pack extends AbstractBaseEntity {
         this.loaded = LocalDateTime.now();
         this.user = user;
         this.processed = false;
-    }
-
-    public Pack() {
     }
 
     public Pack(Pack p) {

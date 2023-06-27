@@ -5,6 +5,7 @@ public class DataFileTo extends BaseTo {
     private final String body;
 
     public DataFileTo(String fileName, String body) {
+        super();
         this.fileName = fileName;
         this.body = body;
     }

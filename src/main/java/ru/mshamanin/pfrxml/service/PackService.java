@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.mshamanin.pfrxml.model.Pack;
 import ru.mshamanin.pfrxml.repository.PackRepository;
+import ru.mshamanin.pfrxml.util.PackUtil;
 
+import javax.validation.constraints.NotNull;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -51,6 +55,11 @@ public class PackService {
     public Pack create(Pack pack, int userId) {
         Assert.notNull(pack, "pack must not be null");
         return packRepository.save(pack, userId);
+    }
+
+    public void upload(@NotNull File uploadingFile, int userId) throws IOException {
+        Pack pack = PackUtil.unzipPack(uploadingFile);
+        packRepository.save(pack, userId);
     }
 
 }
